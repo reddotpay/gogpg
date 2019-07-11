@@ -10,7 +10,6 @@ Simplified GPG encryption using golang
     ```
 
 2. Create a new key
-
     The adviced configuration is:
 
     | Question    | Answer                                |
