@@ -34,21 +34,7 @@ Simplified GPG encryption using golang
 ## Installation
 
 ```
-import "github.com/reddotpay/gogpg"
+import "{{ .ImportPath }}"
 ```
 
-## Usage
-
-#### func  Decrypt
-
-```go
-func Decrypt(secretkey *os.File, passphrase string, text []byte) ([]byte, error)
-```
-Decrypt decrypts the message using secret key file and a passphrase
-
-#### func  Encrypt
-
-```go
-func Encrypt(publickey *os.File, text []byte) ([]byte, error)
-```
-Encrypt encrypts the message using the public key file
+{{ .EmitUsage }}
