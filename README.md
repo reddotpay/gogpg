@@ -42,13 +42,13 @@ import "github.com/reddotpay/gogpg"
 #### func  Decrypt
 
 ```go
-func Decrypt(secretkey *os.File, passphrase string, text []byte) ([]byte, error)
+func Decrypt(secretkey io.Reader, passphrase string, text []byte) ([]byte, error)
 ```
 Decrypt decrypts the message using secret key file and a passphrase
 
 #### func  Encrypt
 
 ```go
-func Encrypt(publickey *os.File, text []byte) ([]byte, error)
+func Encrypt(publickey io.Reader, text []byte) ([]byte, error)
 ```
 Encrypt encrypts the message using the public key file

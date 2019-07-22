@@ -1,6 +1,7 @@
 package gogpg_test
 
 import (
+	"bytes"
 	"os"
 	"testing"
 
@@ -48,6 +49,9 @@ func TestEncyptDecrypt(t *testing.T) {
 
 	_, err = gogpg.Encrypt(nil, []byte(message))
 	assert.EqualError(err, "invalid argument")
+
+	_, err = gogpg.Encrypt(bytes.NewReader([]byte{}), []byte(message))
+	assert.EqualError(err, "openpgp: invalid argument: no armored data found")
 
 	_, err = gogpg.Decrypt(secretkey, "wrongpassphrase", encryptedMessage)
 	assert.EqualError(err, "openpgp: invalid argument: no armored data found")

@@ -2,15 +2,19 @@ package gogpg
 
 import (
 	"bytes"
+	"errors"
 	"io"
 	"io/ioutil"
-	"os"
 
 	"golang.org/x/crypto/openpgp"
 )
 
 // Encrypt encrypts the message using the public key file
-func Encrypt(publickey *os.File, text []byte) ([]byte, error) {
+func Encrypt(publickey io.Reader, text []byte) ([]byte, error) {
+	if publickey == nil {
+		return nil, errors.New("invalid argument")
+	}
+
 	var (
 		buf       = new(bytes.Buffer)
 		key, err  = openpgp.ReadArmoredKeyRing(publickey)
@@ -29,15 +33,17 @@ func Encrypt(publickey *os.File, text []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	if err = plaintext.Close(); err != nil {
-		return nil, err
-	}
+	plaintext.Close()
 
 	return ioutil.ReadAll(buf)
 }
 
 // Decrypt decrypts the message using secret key file and a passphrase
-func Decrypt(secretkey *os.File, passphrase string, text []byte) ([]byte, error) {
+func Decrypt(secretkey io.Reader, passphrase string, text []byte) ([]byte, error) {
+	if secretkey == nil {
+		return nil, errors.New("invalid argument")
+	}
+
 	var (
 		keys, err   = openpgp.ReadArmoredKeyRing(secretkey)
 		passphraseb = []byte(passphrase)
